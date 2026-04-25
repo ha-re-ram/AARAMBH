@@ -1,0 +1,17 @@
+{
+  "name": "AARAMBH Pro",
+  "short_name": "AARAMBH",
+  "description": "Premium Accountability and Discipline Tracker",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#0d0d0d",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/flat-round/512/shield.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

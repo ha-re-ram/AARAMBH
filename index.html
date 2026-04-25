@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0d0d0d">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>AARAMBH Pro | Mastery & Legacy</title>
+    
+    <!-- PWA Link Assets -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/flat-round/512/shield.png">
+    
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #4f8ef7;
+            --accent: #8b5cf6;
+            --danger: #ef4444;
+            --success: #10b981;
+            --bg: #050505;
+            --card: #0f0f0f;
+            --border: #1a1a1a;
+        }
+
+        * { -webkit-tap-highlight-color: transparent; outline: none !important; }
+
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            letter-spacing: -0.01em;
+        }
+
+        .font-heading { font-family: 'Space Grotesk', sans-serif; }
+
+        .glass {
+            background: rgba(15, 15, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+        }
+
+        .tab-content { display: none; opacity: 0; transform: translateY(10px); transition: all 0.4s ease; }
+        .tab-content.active { display: block; opacity: 1; transform: translateY(0); }
+
+        .nav-link.active i {
+            color: var(--primary);
+            filter: drop-shadow(0 0 8px rgba(79,142,247,0.5));
+            transform: translateY(-4px) scale(1.1);
+        }
+        .nav-link i { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        input, textarea, select {
+            background: #0a0a0a !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 18px !important;
+            padding: 18px !important;
+            color: #fff !important;
+        }
+        input:focus { border-color: var(--primary) !important; }
+
+        .heat-cell {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            background: #111;
+            transition: all 0.3s;
+        }
+        .heat-cell.active { background: var(--primary); box-shadow: 0 0 5px var(--primary); }
+
+        @keyframes success-pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .success-anim { animation: success-pop 0.5s ease-out forwards; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .safe-area-bottom { padding-bottom: calc(max(1.5rem, env(safe-area-inset-bottom)) + 5.5rem); }
+        .safe-area-top { padding-top: max(1.5rem, env(safe-area-inset-top)); }
+    </style>
+</head>
+<body class="safe-area-top no-scrollbar">
+
+    <!-- MODAL -->
+    <div id="modal-container" class="fixed inset-0 z-[1000] hidden items-center justify-center px-6">
+        <div onclick="app.closeModal()" id="modal-backdrop" class="absolute inset-0 bg-black/95 backdrop-blur-sm transition-opacity duration-300"></div>
+        <div id="modal-content" class="relative w-full max-w-sm glass rounded-[36px] p-8 opacity-0 translate-y-10 transition-all duration-300">
+            <!-- Dynamic Content -->
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <main id="app-root" class="max-w-md mx-auto px-6 safe-area-bottom">
+        
+        <!-- TOP INDICATORS -->
+        <header class="flex justify-between items-center mb-8">
+            <div class="space-y-1">
+                <h1 class="font-heading text-3xl font-extrabold tracking-tighter">AARAMBH</h1>
+                <div class="flex items-center gap-2">
+                    <span id="label-rank" class="text-[9px] font-bold uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded-full">Initiate</span>
+                    <span id="label-user" class="text-xs text-gray-500 font-bold">Warrior</span>
+                </div>
+            </div>
+            
+            <div class="relative w-14 h-14 flex items-center justify-center group cursor-help" onclick="app.showStats()">
+                <svg class="absolute w-full h-full" viewBox="0 0 100 100">
+                    <circle class="text-white/5" stroke-width="8" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50"/>
+                    <circle id="ring-progress" class="text-primary progress-ring__circle" stroke-width="8" stroke-dasharray="263.89" stroke-dashoffset="263.89" stroke-linecap="round" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50"/>
+                </svg>
+                <span id="text-progress" class="text-[10px] font-bold font-heading">0%</span>
+            </div>
+        </header>
+
+        <!-- VIEWS -->
+        <div id="view-dashboard" class="tab-content active space-y-7">
+            <!-- Consistency Grid -->
+            <div class="glass p-5 rounded-[28px] border-white/5 space-y-3">
+                <div class="flex justify-between items-center px-1">
+                    <span class="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Consistency Map</span>
+                    <span id="streak-fire" class="text-xs font-bold text-orange-500 flex items-center gap-1">
+                        <i data-lucide="flame" class="w-3 h-3"></i> 0 DAY STREAK
+                    </span>
+                </div>
+                <div id="heat-map" class="grid grid-cols-7 gap-1.5 justify-items-center">
+                    <!-- 28-day map -->
+                </div>
+            </div>
+
+            <!-- Habits -->
+            <div class="space-y-4">
+                <div id="habit-container" class="space-y-3">
+                    <!-- Injected Habits -->
+                </div>
+            </div>
+
+            <!-- Panic Button -->
+            <button onclick="app.triggerPanic()" class="w-full h-20 rounded-[28px] bg-danger/5 border border-danger/10 flex items-center justify-center gap-4 active:scale-95 transition-all">
+                <div class="w-10 h-10 rounded-full bg-danger/20 flex items-center justify-center">
+                    <i data-lucide="shield-alert" class="w-5 h-5 text-danger"></i>
+                </div>
+                <span class="font-heading font-bold text-xs tracking-widest text-danger">EMERGENCY PROTOCOL</span>
+            </button>
+        </div>
+
+        <div id="view-journal" class="tab-content space-y-6">
+            <h2 class="font-heading text-3xl font-extrabold px-1">Reflection</h2>
+            <div class="glass p-6 rounded-[32px] space-y-5">
+                <p id="label-journal-today" class="text-[10px] lowercase font-bold text-gray-500 tracking-widest"></p>
+                <textarea id="input-journal" placeholder="How did you confront your shadow today?" class="w-full h-44 no-scrollbar resize-none text-sm leading-relaxed"></textarea>
+                <button onclick="app.saveJournal()" class="w-full bg-primary h-16 rounded-[20px] font-bold flex items-center justify-center gap-3 active:scale-95 transition-all">
+                    <i data-lucide="save" class="w-5 h-5"></i>
+                    SAVE TO MEMORY
+                </button>
+            </div>
+            <div id="journal-list" class="space-y-3 pt-2">
+                <!-- Notes -->
+            </div>
+        </div>
+
+        <div id="view-settings" class="tab-content space-y-8">
+            <h2 class="font-heading text-3xl font-extrabold px-1">Settings</h2>
+            <div class="space-y-6">
+                <div class="space-y-3">
+                    <label class="text-[10px] font-bold text-gray-600 uppercase ml-2">Display Name</label>
+                    <input id="input-name" type="text" class="w-full" placeholder="Warrior Name">
+                </div>
+                <div class="space-y-3">
+                    <label class="text-[10px] font-bold text-gray-600 uppercase ml-2">Edit Core Code</label>
+                    <div id="editor-principles" class="space-y-2"></div>
+                    <button onclick="app.addPrincipleItem()" class="text-[10px] font-bold text-primary px-2">+ ADD NEW CODE</button>
+                </div>
+                <div class="pt-4 grid grid-cols-2 gap-3">
+                    <button onclick="app.exportData()" class="glass p-5 rounded-3xl text-center space-y-2">
+                        <i data-lucide="download" class="w-5 h-5 mx-auto text-gray-500"></i>
+                        <p class="text-[10px] font-bold">EXPORT</p>
+                    </button>
+                    <button onclick="document.getElementById('import-trigger').click()" class="glass p-5 rounded-3xl text-center space-y-2">
+                        <i data-lucide="upload" class="w-5 h-5 mx-auto text-gray-500"></i>
+                        <p class="text-[10px] font-bold">IMPORT</p>
+                    </button>
+                    <input type="file" id="import-trigger" class="hidden" onchange="app.importData(event)">
+                </div>
+                <button onclick="app.saveSettings()" class="w-full bg-primary h-16 rounded-2xl font-bold active:scale-95 transition-all">APPLY CHANGES</button>
+                <button onclick="app.resetSystem()" class="w-full text-danger/30 text-[9px] font-bold tracking-[0.2em]">PURGE SYSTEM DATA</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- NAVIGATION -->
+    <nav class="fixed bottom-0 left-1/2 -translateX-1/2 w-full max-w-md h-24 glass border-t border-white/5 flex items-center justify-around px-10 z-[500] pb-env(safe-area-inset-bottom)">
+        <button onclick="app.navigate('dashboard')" id="nav-dashboard" class="nav-link p-4 text-gray-500 active">
+            <i data-lucide="layout-grid"></i>
+        </button>
+        <button onclick="app.openAddHabit()" class="relative -mt-12 bg-primary w-16 h-16 rounded-[22px] shadow-2xl shadow-primary/40 flex items-center justify-center active:scale-90 transition-transform">
+            <i data-lucide="plus" class="w-8 h-8 text-white"></i>
+        </button>
+        <button onclick="app.navigate('journal')" id="nav-journal" class="nav-link p-4 text-gray-500">
+            <i data-lucide="pen-tool"></i>
+        </button>
+        <button onclick="app.navigate('settings')" id="nav-settings" class="nav-link p-4 text-gray-500">
+            <i data-lucide="settings"></i>
+        </button>
+    </nav>
+
+    <script>
+        // --- DATA ARCHITECTURE ---
+        const INITIAL_STATE = {
+            user: { name: 'Warrior', xp: 0 },
+            habits: [
+                { id: 1, name: 'No Masturbation', icon: 'shield-off', count: 0, lastDone: '', critical: true },
+                { id: 2, name: 'Cold Shower', icon: 'zap', count: 0, lastDone: '', critical: false }
+            ],
+            principles: [
+                "Become someone my future self is proud of.",
+                "Earning freedom through discipline."
+            ],
+            history: {}, 
+            notes: {},   
+            lastDate: new Date().toDateString()
+        };
+
+        const app = {
+            state: JSON.parse(localStorage.getItem('aarambh_deploy_v1')) || INITIAL_STATE,
+            view: 'dashboard',
+
+            init() {
+                this.syncCheck();
+                this.render();
+                lucide.createIcons();
+                this.navigate('dashboard');
+                this.registerSW();
+            },
+
+            registerSW() {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('sw.js').then(reg => {
+                        console.log('AARAMBH: SW Registered');
+                    });
+                }
+            },
+
+            save() {
+                localStorage.setItem('aarambh_deploy_v1', JSON.stringify(this.state));
+                this.render();
+            },
+
+            navigate(v) {
+                this.view = v;
+                document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+                document.getElementById(`view-${v}`).classList.add('active');
+                document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+                document.getElementById(`nav-${v}`).classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                this.render();
+            },
+
+            syncCheck() {
+                const today = new Date().toDateString();
+                if (this.state.lastDate !== today) {
+                    this.state.habits.forEach(h => {
+                        if (h.lastDone !== this.state.lastDate) h.count = 0;
+                    });
+                    this.state.lastDate = today;
+                    this.save();
+                }
+            },
+
+            getDateKey(date = new Date()) {
+                return date.toISOString().split('T')[0];
+            },
+
+            toggleHabit(id) {
+                const h = this.state.habits.find(x => x.id === id);
+                const today = new Date().toDateString();
+                const dKey = this.getDateKey();
+                
+                if (!this.state.history[dKey]) this.state.history[dKey] = [];
+
+                if (h.lastDone === today) {
+                    h.count = Math.max(0, h.count - 1);
+                    h.lastDone = '';
+                    this.state.history[dKey] = this.state.history[dKey].filter(x => x !== id);
+                    if (this.state.history[dKey].length === 0) delete this.state.history[dKey];
+                } else {
+                    h.count++;
+                    h.lastDone = today;
+                    if (!this.state.history[dKey].includes(id)) this.state.history[dKey].push(id);
+                    if (window.navigator.vibrate) window.navigator.vibrate(30);
+                    this.triggerVictoryCheck();
+                }
+                this.save();
+            },
+
+            triggerVictoryCheck() {
+                const done = this.state.habits.every(h => h.lastDone === new Date().toDateString());
+                if(done) {
+                    this.confetti();
+                }
+            },
+
+            saveJournal() {
+                const text = document.getElementById('input-journal').value;
+                if (!text.trim()) return;
+                const dKey = this.getDateKey();
+                this.state.notes[dKey] = text;
+                this.save();
+                this.openModal(`
+                    <div class="text-center space-y-4 py-4">
+                        <div class="w-16 h-16 bg-success/10 text-success rounded-full flex items-center justify-center mx-auto mb-4 success-anim">
+                            <i data-lucide="award" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold">Insight Archived</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed italic">"The man who records his struggles is already half-way to overcoming them."</p>
+                        <button onclick="app.closeModal()" class="w-full bg-primary h-12 rounded-xl font-bold mt-4">STAY STRONG</button>
+                    </div>
+                `);
+            },
+
+            render() {
+                const today = new Date().toDateString();
+                const dKey = this.getDateKey();
+
+                // Stats & Rank
+                const totalComp = Object.values(this.state.history).flat().length;
+                let rank = "Initiate";
+                if(totalComp > 20) rank = "Disciple";
+                if(totalComp > 100) rank = "Warrior";
+                if(totalComp > 500) rank = "Legend";
+                document.getElementById('label-rank').textContent = rank;
+                document.getElementById('label-user').textContent = this.state.user.name;
+
+                // Progress
+                const doneToday = this.state.history[dKey] ? this.state.history[dKey].length : 0;
+                const p = this.state.habits.length > 0 ? Math.round((doneToday / this.state.habits.length) * 100) : 0;
+                document.getElementById('ring-progress').style.strokeDashoffset = 263.89 - (p/100) * 263.89;
+                document.getElementById('text-progress').textContent = p + "%";
+
+                // Habit List
+                const container = document.getElementById('habit-container');
+                container.innerHTML = this.state.habits.map(h => `
+                    <div onclick="app.toggleHabit(${h.id})" class="glass p-5 rounded-[22px] flex items-center justify-between border-white/5 active:scale-[0.98] transition-all cursor-pointer ${h.lastDone === today ? 'border-primary/30 bg-primary/5' : ''}">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-2xl flex items-center justify-center ${h.lastDone === today ? 'bg-primary text-white shadow-lg' : 'bg-white/5 text-gray-600'} transition-all">
+                                <i data-lucide="${h.icon}" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm ${h.lastDone === today ? 'text-white' : 'text-gray-400'}">${h.name}</h4>
+                                <span class="text-[9px] uppercase tracking-widest text-[#444] font-bold">${h.critical ? 'Strict discipline' : 'Daily mission'}</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                             <p class="text-2xl font-heading font-bold ${h.lastDone === today ? 'text-primary' : 'text-gray-700'}">${h.count}</p>
+                             <p class="text-[8px] font-bold text-gray-600 uppercase">Streak</p>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Heat Map
+                const heatContainer = document.getElementById('heat-map');
+                heatContainer.innerHTML = '';
+                for(let i=27; i>=0; i--) {
+                    const date = new Date();
+                    date.setDate(date.getDate() - i);
+                    const k = this.getDateKey(date);
+                    const active = this.state.history[k] && this.state.history[k].length > 0;
+                    heatContainer.innerHTML += `<div class="heat-cell ${active ? 'active' : ''}"></div>`;
+                }
+
+                // Journal
+                document.getElementById('label-journal-today').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+                document.getElementById('input-journal').value = this.state.notes[dKey] || '';
+                const notesKeys = Object.keys(this.state.notes).sort().reverse();
+                document.getElementById('journal-list').innerHTML = notesKeys.filter(k => k !== dKey).map(k => `
+                    <div class="glass p-5 rounded-3xl border-white/5">
+                        <p class="text-[10px] font-bold text-primary uppercase mb-2">Report: ${k}</p>
+                        <p class="text-xs text-gray-400 italic line-clamp-3">"${this.state.notes[k]}"</p>
+                    </div>
+                `).join('');
+
+                // Settings
+                document.getElementById('input-name').value = this.state.user.name;
+                document.getElementById('editor-principles').innerHTML = this.state.principles.map(p => `
+                    <input type="text" value="${p}" class="w-full text-xs p-item mt-2">
+                `).join('');
+
+                lucide.createIcons();
+            },
+
+            openAddHabit() {
+                this.openModal(`
+                    <div class="space-y-6">
+                        <h3 class="font-heading text-xl font-bold">New Mission</h3>
+                        <div class="space-y-4">
+                            <input id="nh-name" type="text" placeholder="Mission Name" class="w-full">
+                            <select id="nh-icon" class="w-full">
+                                <option value="shield">Willpower</option>
+                                <option value="dumbbell">Body</option>
+                                <option value="book">Mind</option>
+                                <option value="code">Skills</option>
+                                <option value="camera">Focus</option>
+                            </select>
+                        </div>
+                        <button onclick="app.saveNewHabit()" class="w-full bg-primary h-16 rounded-[22px] font-bold">COMMIT</button>
+                    </div>
+                `);
+            },
+
+            saveNewHabit() {
+                const n = document.getElementById('nh-name').value;
+                if(!n) return;
+                this.state.habits.push({ id: Date.now(), name: n, icon: document.getElementById('nh-icon').value, count: 0, lastDone: '', critical: false });
+                this.closeModal();
+                this.save();
+            },
+
+            triggerPanic() {
+                this.openModal(`
+                    <div class="space-y-6">
+                        <div class="flex justify-between items-center text-danger">
+                            <h3 class="font-heading text-xl font-bold">EMERGENCY RESET</h3>
+                            <i data-lucide="flame" class="w-5 h-5"></i>
+                        </div>
+                        <p class="text-sm text-gray-400 leading-relaxed">
+                            Breathe. You have <strong>${Object.keys(this.state.history).length} days</strong> of successful combat recorded. Your future self is begging you not to do this.
+                        </p>
+                        <div class="p-4 bg-white/5 border border-white/5 rounded-2xl">
+                             <p class="text-xs italic text-gray-400">"The urge will pass in 10 minutes. The regret lasts a lifetime."</p>
+                        </div>
+                        <button onclick="app.closeModal()" class="w-full bg-white text-black h-14 rounded-2xl font-bold">I AM IN CONTROL</button>
+                    </div>
+                `);
+            },
+
+            saveSettings() {
+                this.state.user.name = document.getElementById('input-name').value;
+                const items = document.querySelectorAll('.p-item');
+                this.state.principles = Array.from(items).map(i => i.value).filter(v => v.trim() !== '');
+                this.save();
+                this.navigate('dashboard');
+            },
+
+            addPrincipleItem() {
+                const container = document.getElementById('editor-principles');
+                container.innerHTML += `<input type="text" value="" class="w-full text-xs p-item mt-2" placeholder="...">`;
+            },
+
+            openModal(html) {
+                const c = document.getElementById('modal-container');
+                const b = document.getElementById('modal-backdrop');
+                const con = document.getElementById('modal-content');
+                con.innerHTML = html;
+                c.classList.remove('hidden');
+                c.classList.add('flex');
+                setTimeout(() => {
+                    b.classList.add('opacity-100');
+                    con.classList.replace('opacity-0', 'opacity-100');
+                    con.classList.replace('translate-y-10', 'translate-y-0');
+                }, 10);
+                lucide.createIcons();
+            },
+
+            closeModal() {
+                const b = document.getElementById('modal-backdrop');
+                const con = document.getElementById('modal-content');
+                b.classList.remove('opacity-100');
+                con.classList.replace('opacity-100', 'opacity-0');
+                con.classList.replace('translate-y-0', 'translate-y-10');
+                setTimeout(() => {
+                    document.getElementById('modal-container').classList.add('hidden');
+                }, 300);
+            },
+
+            exportData() {
+                const d = JSON.stringify(this.state, null, 2);
+                const blob = new Blob([d], {type: 'application/json'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a'); a.href = url;
+                a.download = `aarambh_backup_${this.getDateKey()}.json`;
+                a.click();
+            },
+
+            importData(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    this.state = JSON.parse(event.target.result);
+                    this.save();
+                    location.reload();
+                };
+                reader.readAsText(file);
+            },
+
+            resetSystem() {
+                if(confirm("Factory reset? History will be lost.")) {
+                    localStorage.removeItem('aarambh_deploy_v1');
+                    location.reload();
+                }
+            },
+
+            confetti() {
+                 const emojis = ['🔥', '⚔️', '🛡️', '🏆', '💎'];
+                 for(let i=0; i<15; i++) {
+                     const el = document.createElement('div');
+                     el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                     el.style.position = 'fixed';
+                     el.style.left = Math.random() * 100 + 'vw';
+                     el.style.top = '100vh';
+                     el.style.fontSize = '24px';
+                     el.style.zIndex = '10000';
+                     el.style.transition = `all ${1 + Math.random()}s ease-out`;
+                     document.body.appendChild(el);
+                     setTimeout(() => {
+                          el.style.transform = `translateY(-120vh) rotate(${Math.random() * 360}deg)`;
+                          el.style.opacity = '0';
+                     }, 50);
+                     setTimeout(() => el.remove(), 2000);
+                 }
+            }
+        };
+
+        app.init();
+    </script>
+</body>
+</html>
