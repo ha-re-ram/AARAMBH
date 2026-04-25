@@ -1,17 +1,22 @@
 {
-  "name": "AARAMBH Pro",
+  "name": "AARAMBH | Your Angelic Guide",
   "short_name": "AARAMBH",
-  "description": "Premium Accountability and Discipline Tracker",
+  "description": "A deeply supportive, angelic habit and discipline guide for your soul.",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#050505",
-  "theme_color": "#0d0d0d",
+  "background_color": "#fffbfb",
+  "theme_color": "#ff8fa3",
   "icons": [
     {
-      "src": "https://img.icons8.com/flat-round/512/shield.png",
+      "src": "https://img.icons8.com/plasticine/512/flower.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "https://img.icons8.com/plasticine/192/flower.png",
+      "sizes": "192x192",
+      "type": "image/png"
     }
   ]
 }
