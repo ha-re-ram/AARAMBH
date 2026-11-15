@@ -184,7 +184,7 @@ label {
 .nav-link {
   background: transparent;
   border: none;
-  color: #a8949b;
+  color: #665058;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -194,18 +194,18 @@ label {
   height: 100%;
   border-radius: 20px;
   transition: color 0.2s ease, transform 0.2s ease;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   gap: 3px;
 }
 .nav-link:hover {
-  color: var(--princess);
-}
-.nav-link.active {
   color: var(--princess-dark);
 }
+.nav-link.active {
+  color: #9f1c37;
+}
 .nav-link.active svg {
-  stroke: var(--princess-dark);
+  stroke: #9f1c37;
   filter: drop-shadow(0 0 8px rgba(255, 143, 163, 0.6));
   transform: translateY(-2px) scale(1.1);
 }

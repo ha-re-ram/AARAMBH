@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  
+  <!-- Critical Privacy Protection: App routes must NEVER be indexed -->
+  <meta name="robots" content="noindex, nofollow">
+  
+  <title>AARAMBH | Sanctuary</title>
+  
+  <!-- PWA & Mobile Optimization -->
+  <meta name="theme-color" content="#fff0f3">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="AARAMBH">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+
+  <!-- Local Stylesheet (No External CDNs) -->
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* In-App Toast Styling */
+    .toast-item {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 14px 18px;
+      box-shadow: 0 10px 30px rgba(255, 143, 163, 0.22);
+      border: 1.5px solid rgba(255, 143, 163, 0.3);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      pointer-events: auto;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .toast-error {
+      border-color: rgba(220, 38, 38, 0.4);
+      background: #fff8f8;
+      color: #991b1b;
+    }
+    .toast-item.fade-out {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screen Reader Live Announcer -->
+  <div id="a11y-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" style="position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 8px; width: 90%; max-width: 400px; pointer-events: none;"></div>
+
+  <!-- MAIN APP CONTAINER -->
+  <main id="main-content" class="app-container">
+    
+    <!-- Header -->
+    <header style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px;">
+      <div style="space-y-1">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+          <h1 class="font-heading" style="font-size: 26px; font-weight: 800; color: #b82e4b; margin: 0; letter-spacing: -0.5px;">AARAMBH</h1>
+          <span class="saved-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+            Saved on device
+          </span>
+        </div>
+        <p id="angelic-greeting" style="font-size: 13px; font-weight: 700; color: #755963; margin: 0;">Sending you light and love, honey.</p>
+      </div>
+      
+      <!-- Progress Ring -->
+      <div role="progressbar" 
+           aria-valuenow="0" 
+           aria-valuemin="0" 
+           aria-valuemax="100" 
+           aria-label="Daily habit completion percentage"
+           style="position: relative; width: 68px; height: 68px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+        <svg style="position: absolute; width: 100%; height: 100%;" viewBox="0 0 100 100" aria-hidden="true">
+          <circle style="color: #fff0f3;" stroke-width="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50"/>
+          <circle id="heart-progress" style="color: #ff758f;" class="heart-progress__circle" stroke-width="8" stroke-dasharray="251.3" stroke-dashoffset="251.3" stroke-linecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50"/>
+        </svg>
+        <div class="floating-angel" style="display: flex; flex-direction: column; align-items: center; z-index: 10;">
+          <span style="color: #ff758f; font-size: 12px;" aria-hidden="true">✨</span>
+          <span id="heart-text" style="font-size: 11px; font-weight: 800; color: #381e24; margin-top: 1px;">0%</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- DASHBOARD VIEW -->
+    <div id="v-dashboard" class="tab-content active" role="region" aria-label="Dashboard">
+      
+      <!-- Motivation Message -->
+      <div class="aesthetic-card" style="padding: 22px 24px; background: linear-gradient(135deg, #fff0f3 0%, #ffffff 100%); margin-bottom: 22px; position: relative; overflow: hidden;">
+        <p style="font-size: 14px; font-weight: 700; line-height: 1.6; font-style: italic; color: #381e24; margin: 0;">
+          "Your future is a quiet masterpiece of discipline, painted one conscious breath at a time."
+        </p>
+      </div>
+
+      <!-- Growth Garden Heatmap -->
+      <section class="aesthetic-card" style="padding: 22px 20px; margin-bottom: 22px;" aria-labelledby="garden-heading">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <h2 id="garden-heading" style="font-size: 11px; font-weight: 800; color: #755963; text-transform: uppercase; letter-spacing: 0.15em; margin: 0;">
+            Growth Garden (28 Days)
+          </h2>
+          <span id="streak-flower" style="font-size: 11px; font-weight: 800; color: #9f1c37; background: #ffe8ee; padding: 4px 12px; border-radius: 14px;">
+            🌸 0 HARVESTS
+          </span>
+        </div>
+        <div id="flower-field" class="flower-grid" role="region" aria-label="28-day habit streak garden"></div>
+      </section>
+
+      <!-- Habit List -->
+      <section aria-label="Daily Sacred Habits" style="margin-bottom: 22px;">
+        <div id="habit-container"></div>
+      </section>
+
+      <!-- Rescue Button -->
+      <button type="button" 
+              onclick="app.triggerAngel()" 
+              class="aesthetic-card"
+              style="width: 100%; padding: 18px 20px; display: flex; align-items: center; justify-content: center; gap: 12px; cursor: pointer; border: 2px solid #fff0f3; margin-bottom: 28px; background: #ffffff;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#ff758f" stroke="#ff758f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        <span class="font-heading" style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #9f1c37; font-style: italic;">
+          Save me, I'm slipping
+        </span>
+      </button>
+
+      <!-- Sacred Commitments -->
+      <section aria-labelledby="vows-heading">
+        <h2 id="vows-heading" style="font-size: 11px; font-weight: 800; color: #755963; text-transform: uppercase; letter-spacing: 0.2em; text-align: center; margin: 0 0 14px;">
+          ── Sacred Commitments ──
+        </h2>
+        <div id="sacred-vows"></div>
+      </section>
+
+    </div>
+
+    <!-- SOUL DIARY VIEW -->
+    <div id="v-diary" class="tab-content" role="region" aria-label="Soul Diary">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 class="font-heading" style="font-size: 26px; font-weight: 800; margin: 0; color: #381e24;">Soul Diary</h2>
+        <div id="edit-indicator" class="hidden" style="font-size: 11px; font-weight: 800; background: var(--lavender-soft); color: #7e22ce; padding: 4px 12px; border-radius: 12px;">
+          REPAIR MODE
+        </div>
+      </div>
+
+      <div class="aesthetic-card" style="padding: 24px; margin-bottom: 28px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <label for="diary-input" id="label-diary-date" style="font-size: 11px; font-weight: 800; color: #9f1c37; text-transform: uppercase; margin: 0;">
+            Today's Whisper
+          </label>
+        </div>
+        <textarea id="diary-input" 
+                  rows="6" 
+                  placeholder="Whisper your sacred secrets here, darling... Only your eyes will ever see this." 
+                  aria-label="Whisper your sacred reflection" 
+                  style="resize: vertical; font-size: 15px; margin-bottom: 16px;"></textarea>
+        <div style="display: flex; gap: 10px;">
+          <button type="button" 
+                  onclick="app.saveDiary()" 
+                  class="btn-magical" 
+                  style="flex: 1; height: 56px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" x2="2" y1="8" y2="22"/><line x1="17.5" x2="9" y1="15" y2="15"/></svg>
+            ARCHIVE WHISPER
+          </button>
+          <button type="button" 
+                  id="btn-cancel-edit" 
+                  onclick="app.cancelEditEntry()" 
+                  class="btn-secondary hidden" 
+                  style="font-size: 12px; padding: 0 16px;">
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      <!-- History List -->
+      <section aria-label="Whisper Archives">
+        <div id="diary-history"></div>
+      </section>
+    </div>
+
+    <!-- COMMAND SETTINGS VIEW -->
+    <div id="v-settings" class="tab-content" role="region" aria-label="Command Settings">
+      <h2 class="font-heading" style="font-size: 26px; font-weight: 800; margin: 0 0 24px; color: #381e24;">Command</h2>
+
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <!-- User Name -->
+        <div>
+          <label for="in-name">My Hero Name</label>
+          <input type="text" id="in-name" autocomplete="off" style="font-weight: 600;">
+        </div>
+
+        <!-- Principles / Vows Editor -->
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label style="margin: 0;">My Sacred Vows</label>
+            <button type="button" 
+                    onclick="app.addVowInput()" 
+                    style="background: transparent; border: none; color: #7e22ce; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">
+              <span>+ Add Vow</span>
+            </button>
+          </div>
+          <div id="prin-editor"></div>
+        </div>
+
+        <!-- Backup & Restore Actions -->
+        <div>
+          <label>Data Sovereignty (Local Backup)</label>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <button type="button" onclick="app.exportAll()" class="aesthetic-card" style="padding: 18px 12px; text-align: center; cursor: pointer; border: 1.5px solid var(--border-card);">
+              <div style="color: #ff758f; margin-bottom: 6px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin: 0 auto;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              </div>
+              <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.1em;">EXPORT JSON</span>
+            </button>
+
+            <button type="button" onclick="document.getElementById('import-file-input').click()" class="aesthetic-card" style="padding: 18px 12px; text-align: center; cursor: pointer; border: 1.5px solid var(--border-card);">
+              <div style="color: #7e22ce; margin-bottom: 6px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin: 0 auto;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+              </div>
+              <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.1em;">IMPORT JSON</span>
+            </button>
+            <input type="file" id="import-file-input" aria-label="Upload JSON Backup File" accept=".json,application/json" onchange="app.handleFileSelect(event)" class="sr-only">
+          </div>
+        </div>
+
+        <!-- Privacy & Policy Link -->
+        <div style="text-align: center; margin-top: 4px;">
+          <button type="button" onclick="app.openModal('privacy-modal')" style="background: transparent; border: none; color: #755963; font-size: 12px; font-weight: 700; text-decoration: underline; cursor: pointer;">
+            🔒 Read Our Local-First Privacy Pledge
+          </button>
+        </div>
+
+        <!-- Update Button -->
+        <button type="button" onclick="app.saveSettings()" class="btn-magical" style="width: 100%; height: 56px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.15em;">
+          Update Heart Core
+        </button>
+
+        <!-- Danger Zone -->
+        <div style="border-top: 1px solid rgba(255, 143, 163, 0.2); padding-top: 20px; text-align: center;">
+          <button type="button" onclick="app.openDestroyModal()" style="background: transparent; border: none; color: #dc2626; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; cursor: pointer; padding: 10px;">
+            Destroy Memory Core
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- BOTTOM FIXED NAVIGATION -->
+  <nav id="bottom-nav-container" aria-label="Main App Navigation">
+    <div id="bottom-nav">
+      <button type="button" 
+              aria-label="Guide" 
+              id="nav-dashboard" 
+              onclick="app.navigate('dashboard')" 
+              class="nav-link active">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+        <span>Guide</span>
+      </button>
+
+      <button type="button" 
+              aria-label="Create New Sacred Habit" 
+              onclick="app.openNewMission()" 
+              class="nav-plus">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+      </button>
+
+      <button type="button" 
+              aria-label="Diary" 
+              id="nav-diary" 
+              onclick="app.navigate('diary')" 
+              class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        <span>Diary</span>
+      </button>
+
+      <button type="button" 
+              aria-label="Command" 
+              id="nav-settings" 
+              onclick="app.navigate('settings')" 
+              class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Command</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MODAL: HABIT ADD / EDIT -->
+  <div id="habit-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="habit-modal-title">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 id="habit-modal-title" class="font-heading" style="font-size: 20px; font-weight: 800; color: #b82e4b; margin: 0;">New Sacred Habit</h2>
+        <button type="button" onclick="app.closeModal('habit-modal')" aria-label="Close modal" style="background: transparent; border: none; cursor: pointer; color: #755963; font-size: 16px;">✕</button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div>
+          <label for="modal-habit-name">Habit Title</label>
+          <input type="text" id="modal-habit-name" placeholder="e.g. Dawn Meditation, Reading..." style="font-weight: 600;">
+        </div>
+
+        <div>
+          <label for="modal-habit-icon">Sacred Icon</label>
+          <select id="modal-habit-icon" style="font-weight: 600;">
+            <option value="shield-heart">🛡️ Purity Shield (Purity &amp; Self-Control)</option>
+            <option value="sparkles">✨ Self Study (Growth &amp; Magic)</option>
+            <option value="target">🎯 Sacred Goal (Focus)</option>
+            <option value="zap">⚡ Energy &amp; Fitness</option>
+            <option value="feather">🕊️ Quiet Contemplation</option>
+            <option value="heart">💖 Devotion &amp; Love</option>
+            <option value="sun">☀️ Morning Dawn Routine</option>
+            <option value="star">⭐ Deep Discipline</option>
+          </select>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px; padding: 4px 6px;">
+          <input type="checkbox" id="modal-habit-critical" style="width: 20px; height: 20px; cursor: pointer;">
+          <label for="modal-habit-critical" style="margin: 0; cursor: pointer; text-transform: none; font-size: 13px; font-weight: 700; color: #381e24;">
+            Mark as Sacred Vow (High Priority)
+          </label>
+        </div>
+
+        <button type="button" onclick="app.saveHabitModal()" class="btn-magical" style="height: 52px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px;">
+          Anchor Habit
+        </button>
+
+        <button type="button" id="btn-delete-habit" onclick="app.deleteHabitConfirm()" class="btn-secondary hidden" style="color: #dc2626; border-color: rgba(220, 38, 38, 0.3); font-size: 12px; font-weight: 700;">
+          Release This Habit Forever
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: RESCUE COMPASS -->
+  <div id="rescue-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="rescue-title">
+    <div class="modal-box" style="text-align: center;">
+      <div style="width: 72px; height: 72px; background: #fff0f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#ff758f" stroke="#ff758f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+      </div>
+      <h2 id="rescue-title" class="font-heading" style="font-size: 20px; font-weight: 800; color: #b82e4b; margin: 0 0 12px; font-style: italic;">
+        Don't throw it away, honey...
+      </h2>
+      <p style="font-size: 14px; color: #6e545e; line-height: 1.7; margin: 0 0 20px;">
+        Stop. Take three slow, deep breaths. You have fought so hard for <strong id="rescue-streak-count" style="color: #9f1c37;">beautiful days</strong>. 
+        <br><br>
+        If you give in to this fleeting impulse, tomorrow you will wake up feeling heavy. Put your phone down, drink a cold glass of water, and step outside for 5 minutes.
+        <br><br>
+        I believe in your strength so deeply.
+      </p>
+      <button type="button" onclick="app.closeModal('rescue-modal')" class="btn-magical" style="width: 100%; height: 52px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em;">
+        I Am Stronger Than The Urge
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: IMPORT PREVIEW -->
+  <div id="import-preview-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="import-title">
+    <div class="modal-box">
+      <h2 id="import-title" class="font-heading" style="font-size: 20px; font-weight: 800; color: #b82e4b; margin: 0 0 14px;">Backup Preview</h2>
+      <p style="font-size: 13px; color: #755963; margin: 0 0 16px;">Please review the contents of this backup before applying it. Existing data will be restored to this snapshot.</p>
+      
+      <div style="background: #fff8f9; border-radius: 18px; padding: 16px; font-size: 13px; line-height: 1.8; margin-bottom: 20px; border: 1px solid var(--border-card);">
+        <div><strong>Hero Name:</strong> <span id="import-user"></span></div>
+        <div><strong>Habits:</strong> <span id="import-habits"></span></div>
+        <div><strong>Sacred Vows:</strong> <span id="import-vows"></span></div>
+        <div><strong>Recorded Harvests:</strong> <span id="import-harvests"></span></div>
+        <div><strong>Diary Reflections:</strong> <span id="import-notes"></span></div>
+        <div><strong>Date Range:</strong> <span id="import-dates"></span></div>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <button type="button" onclick="app.confirmImport()" class="btn-magical" style="flex: 1; height: 48px; font-size: 13px;">Confirm &amp; Restore</button>
+        <button type="button" onclick="app.closeModal('import-preview-modal')" class="btn-secondary" style="height: 48px; font-size: 13px;">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DESTROY MEMORY CORE CONFIRMATION -->
+  <div id="destroy-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="destroy-title">
+    <div class="modal-box" style="text-align: center;">
+      <div style="font-size: 36px; margin-bottom: 10px;">🕊️</div>
+      <h2 id="destroy-title" class="font-heading" style="font-size: 20px; font-weight: 800; color: #dc2626; margin: 0 0 10px;">
+        Release All Memories?
+      </h2>
+      <p style="font-size: 13px; color: #6e545e; line-height: 1.6; margin: 0 0 18px;">
+        This will permanently erase all habits, streaks, and Soul Diary reflections from this device. There is no undo.
+      </p>
+
+      <button type="button" onclick="app.exportAll()" class="btn-secondary" style="width: 100%; margin-bottom: 18px; font-size: 12px; font-weight: 700; color: #ff758f;">
+        📥 Download Safety Backup First
+      </button>
+
+      <label for="destroy-input-confirm" style="text-align: left;">Type "RELEASE" to confirm:</label>
+      <input type="text" 
+             id="destroy-input-confirm" 
+             oninput="app.handleDestroyInput(this.value)"
+             placeholder="RELEASE" 
+             style="text-align: center; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 18px;">
+
+      <div style="display: flex; gap: 10px;">
+        <button type="button" 
+                id="btn-confirm-destroy" 
+                disabled 
+                onclick="app.executeDestroy()" 
+                class="btn-magical" 
+                style="flex: 1; height: 48px; font-size: 13px; background: #dc2626;">
+          Permanently Erase
+        </button>
+        <button type="button" onclick="app.closeModal('destroy-modal')" class="btn-secondary" style="height: 48px; font-size: 13px;">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PRIVACY SANCTUARY -->
+  <div id="privacy-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h2 id="privacy-modal-title" class="font-heading" style="font-size: 20px; font-weight: 800; color: #b82e4b; margin: 0;">Privacy Sanctuary</h2>
+        <button type="button" onclick="app.closeModal('privacy-modal')" aria-label="Close modal" style="background: transparent; border: none; cursor: pointer; color: #755963; font-size: 16px;">✕</button>
+      </div>
+
+      <div style="font-size: 13.5px; color: #6e545e; line-height: 1.7; display: flex; flex-direction: column; gap: 12px;">
+        <p><strong>Where does my data live?</strong><br>Every reflection you write and every habit you complete is stored exclusively in your browser's IndexedDB on this device.</p>
+        <p><strong>Are my thoughts transmitted anywhere?</strong><br>Never. AARAMBH has zero backend databases, zero accounts, and zero cloud synchronization.</p>
+        <p><strong>Are search engines indexing my diary?</strong><br>No. The app contains explicit <code>noindex</code> robots directives and is isolated from search indexers.</p>
+        <p><strong>How do I back up or move my data?</strong><br>Visit Command Settings anytime and click <em>Export JSON</em>. You can import this file on any modern browser.</p>
+      </div>
+
+      <button type="button" onclick="app.closeModal('privacy-modal')" class="btn-magical" style="width: 100%; height: 48px; font-size: 13px; margin-top: 20px;">
+        Return to Sanctuary
+      </button>
+    </div>
+  </div>
+
+  <!-- APPLICATION SCRIPTS (No External CDNs) -->
+  <script src="js/icons.js"></script>
+  <script src="js/domain.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
