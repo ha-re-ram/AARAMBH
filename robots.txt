@@ -1,5 +1,7 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Allow: /
+Allow: /AARAMBH/
+Allow: /AARAMBH/index.html
+Disallow: /AARAMBH/app.html
 
-Sitemap: sitemap.xml
+Sitemap: https://hareramkushwaha.com.np/AARAMBH/sitemap.xml

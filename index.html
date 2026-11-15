@@ -1,461 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    
-    <!-- SEO Optimization -->
-    <title>AARAMBH | Your Angelic Habit Guide & Personal Discipline App</title>
-    <meta name="description" content="Aarily angelic and deeply supportive PWA designed to help you stay disciplined, track habits, and archive your soul's journey. Your personal guide to inner peace and mastery.">
-    <meta name="keywords" content="habit tracker, discipline app, accountability, PWA, personal development, journaling, angelic guide">
-    <meta name="author" content="AARAMBH">
-    
-    <!-- PWA & Mobile Optimization -->
-    <meta name="theme-color" content="#fff0f3">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="AARAMBH">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="https://img.icons8.com/plasticine/512/flower.png">
-    
-    <link rel="canonical" href="./">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-    <!-- X (formerly Twitter) & OpenGraph Social Previews -->
-    <meta property="og:title" content="AARAMBH | Your Angelic Guide">
-    <meta property="og:description" content="Transform your life with a supportive, angelic habit guide.">
-    <meta property="og:image" content="https://img.icons8.com/plasticine/512/flower.png">
-    <meta property="og:type" content="website">
+  <!-- Search Engine Optimization -->
+  <title>AARAMBH | Private Habit Tracker &amp; Discipline Sanctuary</title>
+  <meta name="description" content="A local-first, private habit tracker and spiritual journal. Zero cloud tracking, no accounts—your daily discipline sanctuary lives safely on your device.">
+  <meta name="keywords" content="habit tracker, discipline app, spiritual habit tracker, private journal app, local first, daily routine, personal growth">
+  <meta name="author" content="Hareram Kushwaha">
+  <link rel="canonical" href="https://hareramkushwaha.com.np/AARAMBH/">
 
-    <!-- Schema.org Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "AARAMBH",
-      "alternateName": "AARAMBH Angelic Guide",
-      "description": "A deeply supportive, angelic habit tracker and self-discipline guide PWA.",
-      "applicationCategory": "LifestyleApplication",
-      "operatingSystem": "All",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
+  <!-- Mobile & PWA Configuration -->
+  <meta name="theme-color" content="#fff0f3">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="AARAMBH">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+
+  <!-- Open Graph / Facebook Previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hareramkushwaha.com.np/AARAMBH/">
+  <meta property="og:title" content="AARAMBH | Private Habit Tracker &amp; Discipline Sanctuary">
+  <meta property="og:description" content="A local-first, private habit tracker and spiritual journal. Zero cloud tracking, no accounts—your daily discipline sanctuary lives safely on your device.">
+  <meta property="og:image" content="https://hareramkushwaha.com.np/AARAMBH/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Previews -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AARAMBH | Private Habit Tracker &amp; Discipline Sanctuary">
+  <meta name="twitter:description" content="A local-first, private habit tracker and spiritual journal. Zero cloud tracking, no accounts—your daily discipline sanctuary lives safely on your device.">
+  <meta name="twitter:image" content="https://hareramkushwaha.com.np/AARAMBH/assets/og-image.png">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AARAMBH",
+    "alternateName": "AARAMBH Habit Guide & Discipline Sanctuary",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "A local-first, private habit tracker and spiritual journal app designed for personal discipline, daily vows, and quiet self-mastery."
+  }
+  </script>
+
+  <!-- Local CSS (No External CDNs) -->
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .landing-hero {
+      text-align: center;
+      padding: 40px 10px 30px;
     }
-    </script>
-
-    <!-- Libraries -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --princess: #ff8fa3;
-            --lavender: #c084fc;
-            --cream: #fff9fa;
-            --rose: #fb7185;
-            --bg: #fffefe;
-            --text: #4a2c2c;
-        }
-
-        * { -webkit-tap-highlight-color: transparent; outline: none !important; }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Quicksand', sans-serif;
-            overflow-x: hidden;
-            width: 100vw;
-            margin: 0;
-            background: linear-gradient(180deg, #fffefe 0%, #fff0f3 100%);
-        }
-
-        .font-heading { font-family: 'Poppins', sans-serif; }
-
-        .aesthetic-card {
-            background: #ffffff;
-            border-radius: 35px;
-            box-shadow: 0 12px 30px rgba(255, 143, 163, 0.08);
-            border: 1px solid rgba(255, 143, 163, 0.12);
-            transition: all 0.3s ease;
-        }
-
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(25px);
-            border-top: 1px solid rgba(255, 143, 163, 0.2);
-        }
-
-        .btn-magical {
-            background: linear-gradient(135deg, #ff8fa3 0%, #c084fc 100%);
-            box-shadow: 0 10px 25px rgba(255, 143, 163, 0.25);
-            color: white;
-        }
-
-        .tab-content { display: none; opacity: 0; transform: translateY(12px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .tab-content.active { display: block; opacity: 1; transform: translateY(0); }
-
-        .nav-link.active i {
-            color: var(--princess);
-            filter: drop-shadow(0 0 10px rgba(255, 143, 163, 0.5));
-            transform: translateY(-2px) scale(1.1);
-        }
-
-        .heart-progress__circle {
-            transition: stroke-dashoffset 1.2s cubic-bezier(0.65, 0, 0.35, 1);
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
-        }
-
-        input, textarea, select {
-            background: #fffafa !important;
-            border: 1.5px solid rgba(255, 143, 163, 0.12) !important;
-            border-radius: 22px !important;
-            padding: 18px !important;
-            color: var(--text) !important;
-        }
-
-        .heat-dot { width: 10px; height: 10px; border-radius: 50%; background: #fdf2f4; transition: all 0.6s ease; }
-        .heat-dot.active { background: var(--princess); box-shadow: 0 0 10px var(--princess); }
-
-        #bottom-nav-container {
-            position: fixed;
-            bottom: 30px;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            z-index: 5000;
-            pointer-events: none;
-            padding: 0 24px;
-        }
-
-        #bottom-nav {
-            width: 100%;
-            max-width: 400px;
-            height: 76px;
-            border-radius: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            pointer-events: auto;
-            box-shadow: 0 20px 50px rgba(255, 143, 163, 0.15);
-            padding: 0 15px;
-        }
-
-        .nav-plus {
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, #ff8fa3 0%, #ffc1cc 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 12px 30px rgba(255, 143, 163, 0.3);
-            margin-top: -45px;
-            color: white;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .nav-plus:active { transform: scale(0.85) rotate(90deg); }
-
-        .content-main { padding-bottom: 160px; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0px); } }
-        .floating-angel { animation: float 3s ease-in-out infinite; }
-    </style>
+    .landing-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: #ffe8ee;
+      color: #9f1c37;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 143, 163, 0.4);
+    }
+    .landing-title {
+      font-size: 38px;
+      line-height: 1.15;
+      font-weight: 800;
+      color: #381e24;
+      margin: 0 0 16px;
+    }
+    .landing-subtitle {
+      font-size: 17px;
+      color: #6e545e;
+      line-height: 1.6;
+      margin: 0 auto 32px;
+      max-width: 440px;
+    }
+    .feature-grid {
+      display: grid;
+      gap: 18px;
+      margin: 36px 0;
+    }
+    .feature-card {
+      background: #ffffff;
+      border-radius: 26px;
+      padding: 24px;
+      border: 1px solid rgba(255, 143, 163, 0.22);
+      box-shadow: 0 8px 24px rgba(255, 143, 163, 0.08);
+      text-align: left;
+    }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      background: #fff0f3;
+      color: #ff758f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .feature-card h3 {
+      font-size: 19px;
+      font-weight: 700;
+      color: #381e24;
+      margin: 0 0 8px;
+    }
+    .feature-card p {
+      font-size: 14px;
+      color: #6e545e;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .privacy-card {
+      background: linear-gradient(135deg, #fff9fa 0%, #fff0f3 100%);
+      border: 1.5px solid rgba(255, 143, 163, 0.3);
+      border-radius: 28px;
+      padding: 28px;
+      margin: 40px 0;
+    }
+    .privacy-card h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #381e24;
+      margin: 0 0 12px;
+    }
+    .privacy-card p {
+      font-size: 14px;
+      color: #6e545e;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .privacy-card ul {
+      margin: 12px 0;
+      padding-left: 20px;
+      font-size: 14px;
+      color: #6e545e;
+      line-height: 1.7;
+    }
+    .cta-banner {
+      background: #ffffff;
+      border-radius: 30px;
+      padding: 32px 24px;
+      text-align: center;
+      border: 1px solid rgba(255, 143, 163, 0.25);
+      box-shadow: 0 12px 36px rgba(255, 143, 163, 0.12);
+      margin: 40px 0 20px;
+    }
+    .landing-footer {
+      text-align: center;
+      padding: 30px 10px 40px;
+      font-size: 12px;
+      color: #8a707a;
+    }
+  </style>
 </head>
-<body class="no-scrollbar">
+<body>
 
-    <!-- MODAL -->
-    <div id="modal-container" class="fixed inset-0 z-[6000] hidden items-center justify-center px-6">
-        <div onclick="app.closeModal()" id="modal-backdrop" class="absolute inset-0 bg-white/60 backdrop-blur-2xl"></div>
-        <div id="modal-content" class="relative w-full max-w-sm aesthetic-card p-10 opacity-0 translate-y-10 transition-all duration-300 shadow-2xl"></div>
-    </div>
+  <header class="app-container" style="padding-bottom: 0; min-height: auto;">
+    <nav style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <img src="assets/icon.svg" width="36" height="36" alt="AARAMBH Logo">
+        <span class="font-heading" style="font-size: 22px; font-weight: 800; color: #b82e4b; letter-spacing: -0.5px;">AARAMBH</span>
+      </div>
+      <a href="app.html" class="btn-secondary" style="font-size: 13px; text-decoration: none; padding: 10px 18px;">Open App</a>
+    </nav>
+  </header>
 
-    <!-- MAIN APP -->
-    <main class="max-w-md mx-auto px-6 content-main pt-8">
-        
-        <header class="flex justify-between items-center mb-12">
-            <div class="space-y-1">
-                <h1 class="font-heading text-3xl font-bold tracking-tight text-[#ff8fa3]">AARAMBH</h1>
-                <p id="angelic-greeting" class="text-[11px] font-bold text-[#947a82]">Sending you light and love, honey.</p>
-            </div>
-            
-            <div class="relative w-16 h-16 flex items-center justify-center cursor-help">
-                <svg class="absolute w-full h-full" viewBox="0 0 100 100">
-                    <circle class="text-[#fff2f4]" stroke-width="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50"/>
-                    <circle id="heart-progress" class="text-[#ff8fa3] heart-progress__circle" stroke-width="8" stroke-dasharray="251.3" stroke-dashoffset="251.3" stroke-linecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50"/>
-                </svg>
-                <div class="flex flex-col items-center z-10 floating-angel">
-                    <i data-lucide="sparkles" class="w-4 h-4 text-primary fill-primary"></i>
-                    <span id="heart-text" class="text-[10px] font-bold mt-0.5">0%</span>
-                </div>
-            </div>
-        </header>
+  <main class="app-container" style="padding-top: 10px; padding-bottom: 40px;">
+    
+    <!-- Hero Section -->
+    <section class="landing-hero">
+      <div class="landing-badge">🌸 100% Local-First &amp; Private</div>
+      <h1 class="landing-title font-heading">Your Personal Discipline &amp; Spiritual Habit Tracker</h1>
+      <p class="landing-subtitle">
+        A private sanctuary for daily discipline, sacred commitments, and emotional reflection. Everything lives safely on your device with zero cloud tracking.
+      </p>
 
-        <!-- DASHBOARD -->
-        <div id="v-dashboard" class="tab-content active space-y-7">
-            <!-- Motivation -->
-            <div class="p-7 rounded-[40px] bg-gradient-to-br from-[#fff0f3] to-white border border-[#ff8fa315] relative overflow-hidden">
-                <p id="angelic-message" class="text-[13px] font-bold leading-relaxed italic text-[#4a2c2c] italic">"Your future is a beautiful masterpiece, and you are painting it today."</p>
-                <div class="absolute -right-3 -bottom-3 opacity-10">
-                    <i data-lucide="flower" class="w-20 h-20 text-primary"></i>
-                </div>
-            </div>
+      <div style="display: flex; flex-direction: column; gap: 12px; align-items: center;">
+        <a href="app.html" class="btn-magical" style="text-decoration: none; font-size: 16px; padding: 18px 36px; width: 100%; max-width: 320px;">
+          <span>Enter Your Sanctuary</span>
+          <span>→</span>
+        </a>
+        <span style="font-size: 12px; font-weight: 600; color: #755963;">No registration • No accounts • Offline capable</span>
+      </div>
+    </section>
 
-            <!-- Consistency Flower Field -->
-            <div class="aesthetic-card p-6 space-y-4">
-                <div class="flex justify-between items-center">
-                    <span class="text-[10px] font-bold text-muted uppercase tracking-[0.2em]">Growth Garden</span>
-                    <span id="streak-flower" class="text-[10px] font-bold text-primary bg-[#fff0f3] px-3 py-1 rounded-full">🌸 0 PETALS</span>
-                </div>
-                <div id="flower-field" class="grid grid-cols-7 gap-2.5 justify-items-center"></div>
-            </div>
+    <!-- Why AARAMBH / Philosophy -->
+    <section class="aesthetic-card" style="padding: 28px; margin: 30px 0;">
+      <h2 class="font-heading" style="font-size: 20px; font-weight: 700; color: #b82e4b; margin: 0 0 10px;">A Discipline App Made for the Soul</h2>
+      <p style="font-size: 14px; line-height: 1.7; color: #6e545e; margin: 0 0 12px;">
+        Most habit trackers treat self-improvement as a cold metric of streaks, social feeds, and competitive leaderboards. AARAMBH is built with a supportive, angelic approach to personal discipline.
+      </p>
+      <p style="font-size: 14px; line-height: 1.7; color: #6e545e; margin: 0;">
+        Whether you are practicing mindfulness, cultivating spiritual habits, or breaking unwanted patterns, AARAMBH provides a quiet, judgment-free space to anchor your daily commitments and record your inner journey.
+      </p>
+    </section>
 
-            <div id="habit-container" class="space-y-4"></div>
+    <!-- Core Features Grid -->
+    <section aria-labelledby="features-heading">
+      <h2 id="features-heading" class="font-heading" style="font-size: 24px; font-weight: 800; text-align: center; margin: 40px 0 20px;">Core Features for Inner Mastery</h2>
+      
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>Spiritual Habit Tracker</h3>
+          <p>Track sacred vows and gentle habits. Receive real-time visual progress through completion rings and continuous consistency streaks calculated from genuine calendar history.</p>
+        </article>
 
-            <!-- Rescue Button -->
-            <button onclick="app.triggerAngel()" class="w-full h-18 py-5 rounded-[28px] bg-white border-2 border-[#fff0f3] flex items-center justify-center gap-4 text-primary active:scale-95 transition-all shadow-sm">
-                <i data-lucide="heart" class="w-5 h-5 fill-primary"></i>
-                <span class="font-heading font-bold text-[11px] uppercase tracking-widest italic">Save me, I'm slipping</span>
-            </button>
+        <article class="feature-card">
+          <div class="feature-icon">🌸</div>
+          <h3>Growth Garden Heatmap</h3>
+          <p>A 28-day visual garden showing your consistency at a glance. Every day you complete your discipline blooms a petal in your garden.</p>
+        </article>
 
-            <!-- Vows -->
-            <section class="space-y-4">
-                <h3 class="text-[11px] font-bold text-muted uppercase tracking-[0.25em] px-2 text-center text-primary/50 italic">── Sacred Commitments ──</h3>
-                <div id="sacred-vows" class="space-y-3"></div>
-            </section>
-        </div>
+        <article class="feature-card">
+          <div class="feature-icon">📖</div>
+          <h3>Soul Diary (Private Journal App)</h3>
+          <p>A quiet, private journal where you whisper your reflections, challenges, and breakthroughs. Searchable, editable, and saved strictly on your local device.</p>
+        </article>
 
-        <!-- DIARY -->
-        <div id="v-diary" class="tab-content space-y-6">
-            <h2 class="font-heading text-3xl font-bold px-1">Soul Diary</h2>
-            <div class="aesthetic-card p-8 space-y-5">
-                <div class="flex justify-between items-center">
-                    <p id="label-diary-date" class="text-[11px] font-bold text-primary italic uppercase"></p>
-                    <div id="edit-indicator" class="hidden text-[10px] bg-lavender/10 text-lavender px-2 py-0.5 rounded-full font-bold">REPAIR MODE</div>
-                </div>
-                <textarea id="diary-input" placeholder="Whisper your secrets here, darling..." class="w-full h-48 no-scrollbar resize-none text-[15px]"></textarea>
-                <button onclick="app.saveDiary()" class="w-full btn-magical h-16 rounded-[28px] font-bold flex items-center justify-center gap-3">
-                    <i data-lucide="feather" class="w-5 h-5"></i>
-                    ARCHIVE WHISPER
-                </button>
-            </div>
-            <div id="diary-history" class="space-y-4 pt-2"></div>
-        </div>
+        <article class="feature-card">
+          <div class="feature-icon">🆘</div>
+          <h3>Emergency Rescue Compass</h3>
+          <p>When temptation strikes or you feel yourself slipping, tap the rescue button for immediate grounding steps, high-score reminders, and compassionate perspective.</p>
+        </article>
 
-        <!-- SETTINGS -->
-        <div id="v-settings" class="tab-content space-y-8">
-            <h2 class="font-heading text-3xl font-bold px-1">Command</h2>
-            <div class="space-y-7">
-                <div class="space-y-2">
-                    <label class="text-[10px] font-bold text-muted uppercase ml-3 tracking-widest">My Hero Name</label>
-                    <input id="in-name" type="text" class="w-full">
-                </div>
+        <article class="feature-card">
+          <div class="feature-icon">💾</div>
+          <h3>Total Data Sovereignty</h3>
+          <p>Your data belongs to you alone. Back up your history with versioned JSON export and restore your progress on any browser without relying on external servers.</p>
+        </article>
+      </div>
+    </section>
 
-                <div class="space-y-3">
-                    <label class="text-[10px] font-bold text-primary uppercase ml-3 tracking-widest">My Sacred Vows</label>
-                    <div id="prin-editor" class="space-y-3"></div>
-                    <button onclick="app.addVowInput()" class="text-[11px] font-bold text-[#a78bfa] ml-3 italic flex items-center gap-2">
-                        <i data-lucide="plus-circle" class="w-4 h-4"></i> Add New Vow
-                    </button>
-                </div>
+    <!-- Plain-Language Privacy Section -->
+    <section class="privacy-card" id="privacy">
+      <h2>🔒 The Privacy Promise</h2>
+      <p>
+        We believe your spiritual journey and deepest reflections are sacred and private. Unlike cloud productivity services, AARAMBH is engineered around strict local-first principles:
+      </p>
+      <ul>
+        <li><strong>No Cloud Database:</strong> Your habits, vows, and Soul Diary reflections are stored only in your browser's IndexedDB on this device.</li>
+        <li><strong>Zero Data Transmission:</strong> No personal text is ever transmitted over the network or analyzed by AI algorithms.</li>
+        <li><strong>No Third-Party Tracking:</strong> The application runs with self-hosted assets and zero surveillance analytics.</li>
+        <li><strong>You Control the Deletion:</strong> You can export your entire memory core at any time or completely erase it with a single typed confirmation.</li>
+      </ul>
+    </section>
 
-                <div class="grid grid-cols-2 gap-4 pt-4">
-                    <button onclick="app.exportAll()" class="aesthetic-card p-6 text-center group active:scale-95 transition-all"><i data-lucide="download" class="w-6 h-6 mx-auto text-primary mb-2 group-hover:scale-110 transition-transform"></i><span class="text-[11px] font-bold">EXPORT</span></button>
-                    <button onclick="document.getElementById('file').click()" class="aesthetic-card p-6 text-center group active:scale-95 transition-all"><i data-lucide="upload" class="w-6 h-6 mx-auto text-primary mb-2 group-hover:scale-110 transition-transform"></i><span class="text-[11px] font-bold">IMPORT</span></button>
-                    <input type="file" id="file" class="hidden" onchange="app.importAll(event)">
-                </div>
-                <button onclick="app.saveSettings()" class="w-full btn-magical h-16 rounded-[30px] font-bold active:scale-95 transition-all uppercase tracking-widest">Update Heart Core</button>
-                <div class="pt-6 border-t border-primary/10">
-                    <button onclick="app.fullReset()" class="w-full text-danger/30 text-[10px] font-bold tracking-[0.3em] uppercase">Destroy Memory Core</button>
-                </div>
-            </div>
-        </div>
+    <!-- Final Call to Action -->
+    <section class="cta-banner">
+      <h2 class="font-heading" style="font-size: 24px; font-weight: 800; color: #b82e4b; margin: 0 0 10px;">Begin Your Journey Today</h2>
+      <p style="font-size: 14px; color: #6e545e; margin: 0 auto 24px; max-width: 360px;">
+        Cultivate discipline, nurture your spirit, and build habits that honor your highest self.
+      </p>
+      <a href="app.html" class="btn-magical" style="text-decoration: none; font-size: 16px; padding: 18px 36px; display: inline-block;">
+        Open AARAMBH
+      </a>
+    </section>
 
-    </main>
+  </main>
 
-    <!-- FIXED CENTERED NAV -->
-    <div id="bottom-nav-container">
-        <nav id="bottom-nav" class="glass-nav">
-            <button onclick="app.navigate('dashboard')" id="nav-dashboard" class="nav-link text-gray-300 active flex-1 flex justify-center"><i data-lucide="sparkle"></i></button>
-            <button onclick="app.openNewMission()" class="nav-plus"><i data-lucide="plus" class="w-8 h-8"></i></button>
-            <button onclick="app.navigate('diary')" id="nav-diary" class="nav-link text-gray-300 flex-1 flex justify-center"><i data-lucide="heart"></i></button>
-            <button onclick="app.navigate('settings')" id="nav-settings" class="nav-link text-gray-300 flex-1 flex justify-center"><i data-lucide="user"></i></button>
-        </nav>
-    </div>
+  <footer class="landing-footer">
+    <p>AARAMBH • Local-First Personal Discipline &amp; Spiritual Habit Tracker</p>
+    <p style="margin-top: 6px;">Made with light and devotion for your inner journey.</p>
+  </footer>
 
-    <script>
-        const INIT = {
-            user: { name: 'Beautiful Soul' },
-            habits: [
-                { id: 1, name: 'Purity Shield', icon: 'shield-heart', count: 0, lastDone: '', critical: true },
-                { id: 2, name: 'Growth Skill', icon: 'zap', count: 0, lastDone: '' }
-            ],
-            principles: ["You are too strong for these cheap thrills.", "Your energy is your magic."],
-            history: {}, notes: {}, lastDate: new Date().toDateString()
-        };
-
-        const app = {
-            state: JSON.parse(localStorage.getItem('aarambh_angel_vfinal')) || INIT,
-            view: 'dashboard', editDate: null,
-
-            init() {
-                this.sync(); this.render(); this.navigate('dashboard');
-                if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.register('sw.js').then(reg => {
-                        reg.onupdatefound = () => {
-                            const installingWorker = reg.installing;
-                            installingWorker.onstatechange = () => {
-                                if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    alert("New update ready! Please refresh.");
-                                }
-                            };
-                        };
-                    });
-                }
-            },
-
-            save() { localStorage.setItem('aarambh_angel_vfinal', JSON.stringify(this.state)); this.render(); },
-
-            navigate(v) {
-                this.view = v;
-                document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-                document.getElementById(`v-${v}`).classList.add('active');
-                document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
-                const btn = document.getElementById(`nav-${v}`); if (btn) btn.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                this.render();
-            },
-
-            sync() {
-                const today = new Date().toDateString();
-                if (this.state.lastDate !== today) {
-                    this.state.habits.forEach(h => { if (h.lastDone !== this.state.lastDate) h.count = 0; });
-                    this.state.lastDate = today; this.save();
-                }
-            },
-
-            getDateKey(d = new Date()) { return d.toISOString().split('T')[0]; },
-
-            toggleHabit(id) {
-                const h = this.state.habits.find(x => x.id === id);
-                const today = new Date().toDateString();
-                const k = this.getDateKey();
-                if (!this.state.history[k]) this.state.history[k] = [];
-                if (h.lastDone === today) {
-                    h.count = Math.max(0, h.count - 1); h.lastDone = '';
-                    this.state.history[k] = this.state.history[k].filter(x => x !== id);
-                } else {
-                    h.count++; h.lastDone = today;
-                    if (!this.state.history[k].includes(id)) this.state.history[k].push(id);
-                    if (window.navigator.vibrate) window.navigator.vibrate(50);
-                }
-                this.save();
-            },
-
-            saveDiary() {
-                const text = document.getElementById('diary-input').value; if (!text.trim()) return;
-                const dKey = this.editDate || this.getDateKey();
-                this.state.notes[dKey] = text; this.editDate = null;
-                document.getElementById('diary-input').value = ""; this.save();
-                this.openModal(`<div class="text-center py-6 space-y-4"><div class="w-20 h-20 bg-[#fff2f4] rounded-full flex items-center justify-center mx-auto"><i data-lucide="sparkles" class="text-primary w-10 h-10"></i></div><h3 class="font-heading text-xl font-bold text-primary">Whisper Captured</h3><p class="text-sm text-muted">Your heart is safe with me, honey.</p><button onclick="app.closeModal()" class="w-full btn-magical h-14 rounded-2xl font-bold mt-4">BACK TO LIFE</button></div>`);
-            },
-
-            editEntry(k) { this.editDate = k; document.getElementById('diary-input').value = this.state.notes[k]; document.getElementById('v-diary').scrollTo({top: 0, behavior: 'smooth'}); this.render(); },
-
-            render() {
-                const today = new Date().toDateString(); const dKey = this.getDateKey();
-                document.getElementById('angelic-greeting').textContent = `Sending you light and love, ${this.state.user.name.split(' ')[0]}.`;
-
-                const done = this.state.history[dKey] ? this.state.history[dKey].length : 0;
-                const p = this.state.habits.length > 0 ? Math.round((done / this.state.habits.length) * 100) : 0;
-                document.getElementById('heart-progress').style.strokeDashoffset = 251.3 - (p / 100) * 251.3;
-                document.getElementById('heart-text').textContent = p + "%";
-
-                const habitContainer = document.getElementById('habit-container');
-                habitContainer.innerHTML = this.state.habits.map(h => `
-                    <div onclick="app.toggleHabit(${h.id})" class="aesthetic-card p-6 flex items-center justify-between cursor-pointer active:scale-95 transition-all ${h.lastDone === today ? 'border-[#ff8fa355] bg-[#fff0f344]' : ''}">
-                        <div class="flex items-center gap-5">
-                            <div class="w-14 h-14 rounded-[25px] flex items-center justify-center ${h.lastDone === today ? 'bg-primary text-white shadow-xl' : 'bg-[#fff0f3] text-primary'}">
-                                <i data-lucide="${h.icon}" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-[15px] ${h.lastDone === today ? 'text-primary' : 'text-[#4b2c2c]'}">${h.name}</h4>
-                                <span class="text-[9px] uppercase tracking-widest text-[#947a82] font-bold">${h.critical ? 'Sacred Vow' : 'Self Love'}</span>
-                            </div>
-                        </div>
-                        <div class="text-right"><p class="text-3xl font-heading font-bold ${h.lastDone === today ? 'text-primary' : 'text-[#f0f0f0]'}">${h.count}</p></div>
-                    </div>`).join('');
-
-                const flowerField = document.getElementById('flower-field'); flowerField.innerHTML = '';
-                for(let i=27; i>=0; i--) {
-                    const date = new Date(); date.setDate(date.getDate() - i);
-                    const active = this.state.history[this.getDateKey(date)]; flowerField.innerHTML += `<div class="heat-dot ${active ? 'active' : ''}"></div>`;
-                }
-                document.getElementById('streak-flower').textContent = `🌸 ${Object.values(this.state.history).filter(x=>x.length>0).length} HARVESTS`;
-
-                document.getElementById('sacred-vows').innerHTML = this.state.principles.map(v => `
-                    <div class="p-5 rounded-[32px] bg-white/50 border border-[#ff8fa315] flex gap-4 items-center">
-                        <i data-lucide="star" class="w-4 h-4 text-primary fill-primary"></i>
-                        <p class="text-[13px] font-bold italic leading-relaxed text-[#4b2c2c] opacity-80">${v}</p>
-                    </div>`).join('');
-
-                const histories = Object.keys(this.state.notes).sort().reverse();
-                document.getElementById('diary-history').innerHTML = histories.map(k => `
-                    <div class="aesthetic-card p-6 flex flex-col gap-3">
-                        <div class="flex justify-between items-center">
-                            <p class="text-[9px] font-bold text-primary bg-[#fff0f3] px-3 py-1 rounded-full uppercase">${k}</p>
-                            <button onclick="app.editEntry('${k}')" class="text-lavender text-[10px] font-bold underline italic">REPAIR ENTRY</button>
-                        </div>
-                        <p class="text-[14px] text-muted italic leading-relaxed">"${this.state.notes[k]}"</p>
-                    </div>`).join('');
-
-                document.getElementById('label-diary-date').textContent = this.editDate || today;
-                document.getElementById('edit-indicator').classList.toggle('hidden', !this.editDate);
-                document.getElementById('in-name').value = this.state.user.name;
-
-                document.getElementById('prin-editor').innerHTML = this.state.principles.map((v, i) => `
-                    <div class="flex items-center gap-3">
-                        <input type="text" value="${v}" class="vow-field w-full text-sm" placeholder="Vow 0${i+1}">
-                        <button onclick="app.removeVow(${i})" class="text-danger p-2"><i data-lucide="trash" class="w-5 h-5"></i></button>
-                    </div>`).join('');
-
-                lucide.createIcons();
-            },
-
-            openNewMission() { this.openModal(`<div class="space-y-6"><h3 class="font-heading text-xl font-bold">New Love Habit</h3><input id="nm-name" type="text" placeholder="Mission title..." class="w-full"><select id="nm-icon" class="w-full text-sm"><option value="shield-heart">Purity Shield</option><option value="sparkles">Self Study</option><option value="target">Goal</option></select><button onclick="app.saveNewMission()" class="w-full btn-magical h-16 rounded-[28px] font-bold">START MISSION</button></div>`); },
-            saveNewMission() { const n = document.getElementById('nm-name').value; if(n){this.state.habits.push({ id: Date.now(), name: n, icon: document.getElementById('nm-icon').value, count: 0, lastDone: '', critical: false }); this.closeModal(); this.save(); }},
-            addVowInput() { this.state.principles.push(""); this.render(); },
-            removeVow(i) { this.state.principles.splice(i, 1); this.render(); },
-            saveSettings() { this.state.user.name = document.getElementById('in-name').value; this.state.principles = Array.from(document.querySelectorAll('.vow-field')).map(i => i.value).filter(v => v.trim() !== ""); this.save(); this.navigate('dashboard'); },
-            triggerAngel() {
-                const high = Math.max(...this.state.habits.map(h => h.count), 0);
-                this.openModal(`
-                    <div class="space-y-6 text-center">
-                        <div class="w-24 h-24 bg-[#fff0f3] rounded-full flex items-center justify-center mx-auto shadow-inner"><i data-lucide="heart" class="w-12 h-12 fill-primary text-primary"></i></div>
-                        <h3 class="font-heading text-xl font-bold text-primary italic">Don't throw it away, honey...</h3>
-                        <p class="text-[14px] text-muted leading-relaxed">
-                            Stop. Breathe. You've fought so hard for <strong>${high} beautiful days</strong>. If you give in now, you'll wake up tomorrow feeling heavy and dark. 
-                            <br><br>
-                            Go eat some fruit, drink cold water, and walk outside. I'm right here with you, and I believe in you so much.
-                        </p>
-                        <button onclick="app.closeModal()" class="w-full btn-magical h-16 rounded-[28px] font-bold shadow-lg">I'M STRONGER THAN THE URGE</button>
-                    </div>`);
-            },
-            openModal(html) { const c = document.getElementById('modal-container'); const m = document.getElementById('modal-content'); m.innerHTML = html; c.classList.remove('hidden'); c.classList.add('flex'); setTimeout(() => { m.classList.replace('opacity-0', 'opacity-100'); m.classList.replace('translate-y-10', 'translate-y-0'); }, 10); lucide.createIcons(); },
-            closeModal() { const m = document.getElementById('modal-content'); m.classList.replace('opacity-100', 'opacity-0'); m.classList.replace('translate-y-0', 'translate-y-10'); setTimeout(() => document.getElementById('modal-container').classList.add('hidden'), 300); },
-            exportAll() { const blob = new Blob([JSON.stringify(this.state)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'angel_memory.json'; a.click(); },
-            importAll(e) { const r = new FileReader(); r.onload = (ev) => { this.state = JSON.parse(ev.target.result); this.save(); location.reload(); }; r.readAsText(e.target.files[0]); },
-            fullReset() { if (confirm("Erase all our progress, sweetheart?")) { localStorage.removeItem('aarambh_angel_vfinal'); location.reload(); } }
-        };
-
-        app.init();
-    </script>
 </body>
 </html>
