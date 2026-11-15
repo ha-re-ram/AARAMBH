@@ -1,0 +1,21 @@
+{
+  "name": "aarambh",
+  "version": "2.0.0",
+  "description": "Local-first, private habit and discipline tracker for personal spiritual growth",
+  "main": "index.html",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "test:unit": "node --test tests/domain.test.js tests/storage.test.js tests/icons.test.js",
+    "test:e2e": "node --test tests/e2e.test.js"
+  },
+  "keywords": [
+    "habit-tracker",
+    "discipline-app",
+    "spiritual-habit-tracker",
+    "private-journal-app",
+    "local-first",
+    "pwa"
+  ],
+  "author": "Hareram Kushwaha",
+  "license": "MIT"
+}
